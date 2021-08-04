@@ -1,23 +1,23 @@
 ---
 # This playbook deploys the whole application stack in this site.
-
-- name: apply common configuration to all nodes
-  hosts: all
-  remote_user: root
-
-  roles:
+- hosts: all
+  tasks:
+  - name: Install MariaDB package
+    remote_user: root
+    roles:
     - common
 
-- name: configure and deploy the webservers and application code
-  hosts: webservers
-  remote_user: root
+#- hosts: webservers
+#  tasks:
+#  - name: configure and deploy the webservers and application code
+#    remote_user: root
+#    roles:
+#    - web
 
-  roles:
-    - web
-
-- name: deploy MySQL and configure the databases
-  hosts: dbservers
-  remote_user: root
-
-  roles:
-    - db
+#- hosts: dbservers
+#  tasks:
+#  - name: deploy MySQL and configure the databases
+#    hosts: dbservers
+#    remote_user: root
+#    roles:
+#    - db
