@@ -1,28 +1,20 @@
-
 # This playbook contains common plays that will be run on all nodes.
-- hosts: all
-
-  tasks:
   - name: Install MariaDB package
-    yum: name=ntp state=present
-    tags: ntp
+    yum: name=chrony state=present
+    tags: ntp/chrony
 
   - name: Install common dependencies
     yum:
-      name: "{{ item }}"
-      state: install
-      with_items:
+      name: "httpd" 
+      state: present
+    with_items:
             - libselinux-python
             - libsemanage-python
             - firewalld
 
   - name: Configure ntp file
-    template: src=ntp.conf.j2 dest=/etc/ntp.conf
+    template: 
+      src: /home/ansible/ansible/obligatorio_2021_08/lamp/roles/common/templates/ntp.conf.j2
+      dest: /etc/ntp.conf
     tags: ntp
-    notify: restart ntp
-
-  handlers:
-    - name: Start the ntp servicio
-      service: name=ntp state=restarted
-      tags: ntp
-
+    notify: restart chronyd

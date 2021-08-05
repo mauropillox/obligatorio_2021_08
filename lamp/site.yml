@@ -1,16 +1,14 @@
 ---
 # This playbook deploys the whole application stack in this site.
 - hosts: all
-  tasks:
-  - name: Install MariaDB package
-    remote_user: root
-    roles:
+  remote_user: ansible
+  roles:
     - common
 
 #- hosts: webservers
 #  tasks:
 #  - name: configure and deploy the webservers and application code
-#    remote_user: root
+#    remote_user: ansible
 #    roles:
 #    - web
 
@@ -18,6 +16,6 @@
 #  tasks:
 #  - name: deploy MySQL and configure the databases
 #    hosts: dbservers
-#    remote_user: root
+#    remote_user: ansible
 #    roles:
 #    - db
