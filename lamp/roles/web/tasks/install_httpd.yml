@@ -5,32 +5,46 @@
   tasks:
   - name: Install httpd and php
     yum: 
-      name: "{{ item }}" 
-      state: install
+      name: "python" 
+      state: present
       with_items:
       - mariadb-server
       - MySQL-python
 
   - name: Install httpd and php
-    yum: name={{ item }} state=present
+    yum: 
+      name: php 
+      state: present
     with_items:
      - httpd
      - php
      - php-mysql
 
   - name: Install web role specific dependencies
-    yum: name={{ item }} state=installed
+    yum: 
+      name: git
+      state: present
     with_items:
     - git
 
   - name: Start firewalld
-    service: name=firewalld state=started enabled=yes
+    service: 
+      name: firewalld 
+      state: present
+      enabled: yes
 
   - name: insert firewalld rule for httpd
-    firewalld: port={{ httpd_port }}/tcp permanent=true state=enabled immediate=yes
+    firewalld: 
+      port: 443/tcp 
+      permanent: true 
+      state: present
+      immediate: yes
 
   - name: http service state
-    service: name=httpd state=started enabled=yes
+    service: 
+      name: httpd
+      state: present
+      enabled: yes
 
   - name: Configure SELinux to allow httpd to connect to remote database
-    seboolean: name=httpd_can_network_connect_db state=true persistent=yes
+    seboolean: name:httpd_can_network_connect_db state=true persistent=yes
