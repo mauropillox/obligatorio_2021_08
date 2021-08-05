@@ -2,7 +2,7 @@
 # These tasks install http and the php modules.
   - name: Install httpd and php
     yum: 
-      name: "python2" 
+      name: "python39" 
       state: present
     with_items:
         - mariadb-server
