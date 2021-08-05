@@ -1,21 +1,20 @@
 ---
+# This playbook deploys the whole db stack in this site.
+- hosts: dbservers
+  remote_user: ansible
+  roles:
+    - db
+# This playbook deploys the whole weberver stack in this site.
+
+- hosts: webservers
+  remote_user: root
+  roles:
+    - web
+
 # This playbook deploys the whole application stack in this site.
 - hosts: all
   remote_user: ansible
   roles:
     - common
 
-#- hosts: webservers
-#  tasks:
-#  - name: configure and deploy the webservers and application code
-#    remote_user: ansible
-#    roles:
-#    - web
 
-#- hosts: dbservers
-#  tasks:
-#  - name: deploy MySQL and configure the databases
-#    hosts: dbservers
-#    remote_user: ansible
-#    roles:
-#    - db

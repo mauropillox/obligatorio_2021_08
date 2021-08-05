@@ -1,8 +1,4 @@
 ---
 # Handler to handle DB tier notifications
-
-- hosts: all
-
-  tasks:
-  - name: Restart MariaDB
-    service: name=mariadb state=restarted
+- name: restart mariadb
+  service: name=mariadb state=restarted
