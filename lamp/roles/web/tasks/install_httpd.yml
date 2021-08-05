@@ -2,11 +2,11 @@
 # These tasks install http and the php modules.
   - name: Install httpd and php
     yum: 
-      name: "python" 
+      name: "python2" 
       state: present
-      with_items:
-      - mariadb-server
-      - MySQL-python
+    with_items:
+        - mariadb-server
+        - MySQL-python
 
   - name: Install httpd and php
     yum: 
@@ -27,24 +27,24 @@
   - name: Start firewalld
     service: 
       name: firewalld 
-      state: present
+      state: started
       enabled: yes
 
   - name: insert firewalld rule for httpd
     firewalld: 
       port: 443/tcp 
       permanent: true 
-      state: present
+      state: enabled
       immediate: yes
 
   - name: http service state
     service: 
       name: httpd
-      state: present
+      state: started
       enabled: yes
 
   - name: Configure SELinux to allow httpd to connect to remote database
-    service: 
+    seboolean: 
       name: httpd_can_network_connect_db 
-      state: true 
+      state: yes 
       persistent: yes
