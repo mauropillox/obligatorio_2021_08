@@ -1,5 +1,5 @@
 [webservers]
-localhost
+192.168.1.11 ansible_user=ansible ansible_password=ansible01
 
 [dbservers]
 192.168.1.11
