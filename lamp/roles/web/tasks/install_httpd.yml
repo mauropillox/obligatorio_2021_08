@@ -1,8 +1,5 @@
 ---
 # These tasks install http and the php modules.
-- hosts: all
-
-  tasks:
   - name: Install httpd and php
     yum: 
       name: "python" 
