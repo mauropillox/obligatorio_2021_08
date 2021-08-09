@@ -5,12 +5,9 @@
 
   - name: Install common dependencies
     yum:
-      name: "httpd" 
-      state: present
-    with_items:
-            - libselinux-python
-            - libsemanage-python
+      name: 
             - firewalld
+      state: present
 
   - name: Configure ntp file
     template: 

@@ -1,13 +1,4 @@
 ---
-# These tasks install http and the php modules.
-  - name: Install mysqld and php
-    yum: 
-      name: "mysql" 
-      state: present
-    with_items:
-        - mariadb-server
-        - MySQL-python
-
   - name: Install httpd and php
     yum: 
       name: php 
