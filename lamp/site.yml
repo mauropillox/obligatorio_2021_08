@@ -1,13 +1,13 @@
 ---
 #This playbook deploys the whole application stack in this site.
-#- hosts: all
-#  remote_user: ansible
-#  roles:
-#   - common
+- hosts: all
+  remote_user: ansible
+  roles:
+   - common
 
-# This playbook deploys the whole weberver stack in this site.
+#This playbook deploys the whole weberver stack in this site.
 - hosts: webservers
-  remote_user: root
+  remote_user: ansible
   roles:
     - web
 

@@ -2,19 +2,16 @@
 # This playbook will install MariaDB and create db user and give permissions.
   - name: Install MariaDB package
     yum: 
-      name: "mariadb" 
+      name: 
+        - mariadb-server 
+        - python3-PyMySQL
       state: present
-    with_items:
-      - mysql-server
-      - mysql-client
-      - python-mysqldb
-      - python2-PyMySQL
-    
+
   - name: Configure SELinux to start mysql on any port
     seboolean: name=mysql_connect_any state=true persistent=yes
 
   - name: Create Mysql configuration file
-    template: src=my.cnf.j2 dest=/var/lib/mysql
+    template: src=/home/ansible/ansible/obligatorio_2021_08/lamp/roles/db/templates/my.cnf.j2 dest=/var/lib/mysql
     notify:
     - restart mariadb
 
@@ -32,17 +29,22 @@
 
   - name: insert firewalld rule
     firewalld: port={{ mysql_port }}/tcp permanent=true state=enabled immediate=yes
-      
+
   - name: Create Application Database
-    mysql_db: name={{ dbname }} 
+    mysql_db: 
+      name={{ dbname }} 
       state=present 
-      login_user=foouser 
-      login_password=abc 
-    #login_unix_socket= 
+   #   config_file=/home/ansible/ansible/obligatorio_2021_08/lamp/roles/db/templates/my.cnf.j2
 
   - name: Create Application DB User
     mysql_user: 
-      name={{ dbuser }} 
-      password={{ upassword }} 
+      check_implicit_admin=true
+      name={{ dbname }} 
+      login_user={{ dbuser }}
+      login_password={{ upassword }} 
+      password={{ upassword }}
       priv=*.*:ALL 
-      host='%' state=present
+      host='%' 
+      state=present
+      #config_file=/home/ansible/ansible/obligatorio_2021_08/lamp/roles/db/templates/my.cnf.j2
+
