@@ -5,14 +5,16 @@
       name: "mariadb" 
       state: present
     with_items:
-      - mariadb-server
-      - MySQL-python
+      - mysql-server
+      - mysql-client
+      - python-mysqldb
+      - python2-PyMySQL
     
   - name: Configure SELinux to start mysql on any port
     seboolean: name=mysql_connect_any state=true persistent=yes
 
   - name: Create Mysql configuration file
-    template: src=my.cnf.j2 dest=/etc/my.cnf
+    template: src=my.cnf.j2 dest=/var/lib/mysql
     notify:
     - restart mariadb
 
@@ -20,7 +22,7 @@
     file: path=/var/log/mysqld.log state=touch owner=mysql group=mysql mode=0775
 
   - name: Create MariaDB PID directory
-    file: path=/var/run/mysqld state=directory owner=mysql group=mysql mode=0775
+    file: path=/var/run/mysqld state=touch owner=mysql group=mysql mode=0775
 
   - name: Start MariaDB Service
     service: name=mariadb state=started enabled=yes
@@ -30,9 +32,17 @@
 
   - name: insert firewalld rule
     firewalld: port={{ mysql_port }}/tcp permanent=true state=enabled immediate=yes
-
+      
   - name: Create Application Database
-    mysql_db: name={{ dbname }} state=present
+    mysql_db: name={{ dbname }} 
+      state=present 
+      login_user=foouser 
+      login_password=abc 
+    #login_unix_socket= 
 
   - name: Create Application DB User
-    mysql_user: name={{ dbuser }} password={{ upassword }} priv=*.*:ALL host='%' state=present
+    mysql_user: 
+      name={{ dbuser }} 
+      password={{ upassword }} 
+      priv=*.*:ALL 
+      host='%' state=present
