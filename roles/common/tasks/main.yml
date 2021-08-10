@@ -14,7 +14,7 @@
       name: 
         - firewalld
       state: present
-    when: ansible_facts['os_family'] == "Debian"
+    when: ansible_facts['os_family'] == "Ubuntu"
 
   - name: Configure ntp file
     become: yes
