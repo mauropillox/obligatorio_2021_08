@@ -1,6 +1,6 @@
 [webservers]
-#192.168.1.11 ansible_user=ansible ansible_password=ansible01
-192.168.1.16 ansible_user=ansible ansible_password=ansible01 ansible_become=yes ansible_become_user=root ansible_become_method=enable
+192.168.1.11 ansible_user=ansible ansible_password=ansible01
+#192.168.1.16 ansible_user=ansible ansible_password=ansible01 ansible_become=yes ansible_become_user=root ansible_become_method=enable
 [dbservers]
 192.168.1.11 ansible_user=ansible ansible_password=ansible01
 
