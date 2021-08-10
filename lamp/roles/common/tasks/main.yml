@@ -1,5 +1,5 @@
 # This playbook contains common plays that will be run on all nodes.
-  - name: Install MariaDB package
+  - name: Install Chrony
     yum: name=chrony state=present
     tags: ntp/chrony
 
