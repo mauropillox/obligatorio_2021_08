@@ -46,5 +46,6 @@
       priv=*.*:ALL 
       host='%' 
       state=present
+      update_password=always 
       #config_file=/home/ansible/ansible/obligatorio_2021_08/lamp/roles/db/templates/my.cnf.j2
 
