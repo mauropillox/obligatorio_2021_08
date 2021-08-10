@@ -5,9 +5,9 @@
 #- hosts: all
 
 - name: Copy the code from repository
-  git: repo=https://github.com/mauropillox/obligatorio_2021_08.git dest=/var/www/html/
-  when: ansible_facts['os_family'] == "Ubuntu"
+  git: repo={{ repository }} dest=/var/www/html force=yes
+  when: ansible_facts['distribution'] == "Ubuntu"
 
 - name: Creates the index.php file
   template: src=index.php.j2 dest=/var/www/html/index.php
-  when: ansible_facts['os_family'] == "Ubuntu"
+  when: ansible_facts['distribution'] == "Ubuntu"
