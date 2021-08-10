@@ -16,10 +16,10 @@
       state: present
     when: ansible_facts['os_family'] == "Ubuntu"
 
- # - name: Configure ntp file
- #   become: yes
- #   template: 
- #     src: /home/ansible/ansible/obligatorio_2021_08/lamp/roles/common/templates/ntp.conf.j2
- #     dest: /etc/ntp.conf
- #   tags: ntp
- #   notify: restart chronyd
+  - name: Configure ntp file
+    become: yes
+    template: 
+      src: /home/ansible/ansible/obligatorio_2021_08/lamp/roles/common/templates/ntp.conf.j2
+      dest: /etc/ntp.conf
+    tags: ntp
+    notify: restart chronyd
