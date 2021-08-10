@@ -1,0 +1,67 @@
+---
+ # - name: Install httpd and php
+ #   yum: 
+ #     name: php 
+ #  state: present
+ #   with_items:
+ #    - httpd
+ #    - php
+ #    - php-mysql
+ #    - python
+ #   when: ansible_facts['os_family'] == "RedHat"
+
+  - name: Install httpd and php
+    apt: 
+      name: httpd 
+      state: present
+    with_items:
+     - httpd
+     - php
+     - php-mysql
+     - firewalld
+    when: 
+     ansible_facts['os_family'] == "Ubuntu"
+
+  - name: Install web role specific dependencies
+    apt: 
+      name: git
+      state: present
+    with_items:
+    - git
+    when: 
+     ansible_facts['os_family'] == "Ubuntu"
+    
+  - name: Start firewalld
+    service: 
+      name: firewalld 
+      state: enabled
+      enabled: yes
+      become: yes
+    when: 
+     ansible_facts['os_family'] == "Ubuntu"
+    
+  - name: insert firewalld rule for httpd
+    firewalld: 
+      port: 443/tcp 
+      permanent: true 
+      state: enabled
+      immediate: yes
+    become: yes
+    when: 
+     ansible_facts['os_family'] == "Ubuntu"
+
+  - name: http service state
+    service: 
+      name: httpd
+      state: enabled
+      enabled: yes
+    when: 
+     ansible_facts['os_family'] == "Ubuntu"
+      
+  - name: Configure SELinux to allow httpd to connect to remote database
+    seboolean: 
+      name: httpd_can_network_connect_db 
+      state: yes 
+      persistent: yes
+    when: 
+     ansible_facts['os_family'] == "Ubuntu"
